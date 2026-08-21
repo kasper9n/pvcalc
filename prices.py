@@ -1,14 +1,17 @@
+# prices.py
 import csv
-from datetime import date, timedelta
+from datetime import datetime, timedelta
 from pathlib import Path
 
 import requests
 
-url = "https://www.hvakosterstrommen.no/api/v1/prices"
-output_file = Path("output/prices.csv")
+from config import params
 
-start_date = date(2022, 1, 1)
-end_date = date(2024, 12, 31)
+url = "https://www.hvakosterstrommen.no/api/v1/prices"
+output_file = Path("output/pricestest.csv")
+
+start_date = datetime.fromisoformat(params["start_time"]).date()
+end_date = datetime.fromisoformat(params["end_time"]).date()
 
 output_file.parent.mkdir(parents=True, exist_ok=True)
 

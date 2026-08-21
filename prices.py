@@ -7,7 +7,7 @@ import requests
 url = "https://www.hvakosterstrommen.no/api/v1/prices"
 output_file = Path("output/prices.csv")
 
-start_date = date(2024, 1, 1)
+start_date = date(2022, 1, 1)
 end_date = date(2024, 12, 31)
 
 output_file.parent.mkdir(parents=True, exist_ok=True)

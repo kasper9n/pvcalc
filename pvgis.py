@@ -17,7 +17,7 @@ default_params = {
     "surface_orientation": 180,
     "surface_tilt": 30,
     # Full year 2024
-    "start_time": "2024-01-01T00:00:00",
+    "start_time": "2022-01-01T00:00:00",
     "end_time": "2024-12-31T23:59:59",
     "frequency": "Hourly",
     "timezone": "Europe/Oslo",

@@ -1,7 +1,8 @@
 import csv
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from pprint import pformat
+from zoneinfo import ZoneInfo
 
 import requests
 
@@ -35,7 +36,7 @@ default_params = {
 
 
 if not config_file.exists():
-    _ = config_file.write_text(
+    config_file.write_text(
         f"params = {pformat(default_params, sort_dicts=False)}\n",
         encoding="utf-8",
     )
@@ -60,18 +61,27 @@ power = data["power"]
 
 print(f"Received {len(power)} hourly values.", flush=True)
 
-start = datetime.fromisoformat(params["start_time"])
-timestamps = [start + timedelta(hours=i) for i in range(len(power))]
+# Generate timestamps as real hourly instants in UTC,
+# then convert them to Europe/Oslo for output.
+oslo = ZoneInfo("Europe/Oslo")
+
+start_local = datetime.fromisoformat(params["start_time"]).replace(tzinfo=oslo)
+
+start_utc = start_local.astimezone(timezone.utc)
+
+timestamps = [
+    (start_utc + timedelta(hours=i)).astimezone(oslo) for i in range(len(power))
+]
 
 output_file.parent.mkdir(parents=True, exist_ok=True)
 
 with output_file.open("w", newline="", encoding="utf-8") as f:
     writer = csv.writer(f)
 
-    _ = writer.writerow(["timestamp", "power_w"])
+    writer.writerow(["timestamp", "power_w"])
 
     for timestamp, value in zip(timestamps, power):
-        _ = writer.writerow(
+        writer.writerow(
             [
                 timestamp.isoformat(),
                 value,

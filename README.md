@@ -13,3 +13,12 @@ Generates `output/prices.csv` with Norwegian electricity prices.
 ```
 poetry run python prices.py
 ```
+
+### prices.py
+
+Combine the previous outputs to get total earnings for each hour, and log the total.
+Use the previous outputs to generate `earnings.csv` with the hourly earnings per hour, and log the total earnings for each month/year.
+Generates `output/prices.csv` with Norwegian electricity prices.
+```
+poetry run python prices.py
+```

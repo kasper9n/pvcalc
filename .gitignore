@@ -1,0 +1,11 @@
+config.py
+output/
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+.pytest_cache/
+
+# macOS
+.DS_Store
